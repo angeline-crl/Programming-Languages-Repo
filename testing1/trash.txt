@@ -1,0 +1,13 @@
+int main (){
+    // int number = 1;
+    // ifstream myfile ("listOfKeywords.txt");
+    // string elements;
+    // while (getline(myfile, elements))
+    //     number++;
+    // myfile.close();
+
+    // string keys[number];
+    
+}
+
+(sizeof(keys)/sizeof(keys[0])
