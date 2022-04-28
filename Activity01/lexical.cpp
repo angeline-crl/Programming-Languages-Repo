@@ -7,16 +7,36 @@
 #include <fstream>
 using namespace std;
 
-string arr[] = { "void", "using", "namespace", "int", 
-    "include", "iostream", "std", "main", 
-    "cin", "cout", "return", "float", 
-    "double", "string" 
-};
+string keys [100];
+int number = 0;
 
-bool isKeyword (string a)
-{
-	for (int i = 0; i < 14; i++) {
-		if (arr[i] == a) {
+void store_keyword(){
+    short loop=0; 
+    string line; 
+    ifstream myfile ("listOfKeywords.txt");
+    if (myfile.is_open()) 
+    {
+        while(getline(myfile,line)){
+            keys[loop] = line;
+            loop++;
+        }
+        myfile.close(); 
+    }
+}
+
+void numberOfElements(){
+	int numbers = 1;
+    ifstream myfile ("listOfKeywords.txt");
+    string elements;
+    while (getline(myfile, elements))
+        number = numbers+1;
+    myfile.close();
+}
+
+bool isKeyword (string a){
+	//gets the size of the key array
+	for (int i = 0; i < number ; i++) {
+		if (keys[i] == a) {
 			return true;
 		}
 	}
@@ -24,6 +44,11 @@ bool isKeyword (string a)
 }
 
 int main (){
+	//initialization the array ---> keys[100]
+	// will get from notpad
+	store_keyword();
+	numberOfElements();
+
     ifstream file("prog.txt");
     string x;
     string code = "";
