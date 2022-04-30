@@ -59,18 +59,18 @@ int main (){
             s == "==" || s == "&" || s == "|" || s == "%" || 
             s == "++" || s == "--" || s == "+=" || s == "-=" || 
             s == "/=" || s == "*=" || s == "%=") {
-                cout << s <<" is an operator"<<endl;
+                // cout << s <<" is an operator"<<endl;
 				operators.push_back(s);
                 s = "";
             } else if (isKeyword (s)){
-				cout << s <<" is a keyword"<<endl;
+				// cout << s <<" is a keyword"<<endl;
 				keywords.push_back(s);
 				s = "";
 			} else if (s == "(" || s == "{" || s == "[" || s == ")" || 
             s == "}" || s == "]" || s == "<" || s == ">" ||
             s == "()" || s == ";" || s == "<<" || s == ">>" ||
             s == "," || s == "#"){
-				cout << s <<" is a symbol"<<endl;
+				// cout << s <<" is a symbol"<<endl;
 				symbols.push_back(s);
 				s = "";
 			} else if (s == "\n" || s == "" || s == "") {
@@ -81,12 +81,12 @@ int main (){
 						continue;
 					}
 					else {
-						cout << s <<" is a constant"<<endl;
+						// cout << s <<" is a constant"<<endl;
 						constants.push_back(s);
 						s = "";
 					}		
 			} else {
-				cout << s <<" is an identifier"<<endl;
+				// cout << s <<" is an identifier"<<endl;
 				identifiers.push_back(s);
 				s = "";
 			}		
