@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <list> 
 using namespace std;
 
 string arr[] = { "void", "using", "namespace", "int", 
@@ -23,7 +24,22 @@ bool isKeyword (string a)
 	return false;
 }
 
+void print(list<string> const &list, string label)
+{
+	cout<<"-----------"<<label<<"-----------"<<endl;
+    for (auto const &i: list) {
+        cout << i << endl;
+    }
+}
+
 int main (){
+	//storage
+	list<string> operators = list<string>();
+	list<string> keywords = list<string>();
+	list<string> symbols = list<string>();
+	list<string> identifiers = list<string>();
+	list<string> constants = list<string>();
+	
     ifstream file("prog.txt");
     string x;
     string code = "";
@@ -44,15 +60,18 @@ int main (){
             s == "++" || s == "--" || s == "+=" || s == "-=" || 
             s == "/=" || s == "*=" || s == "%=") {
                 cout << s <<" is an operator"<<endl;
+				operators.push_back(s);
                 s = "";
             } else if (isKeyword (s)){
 				cout << s <<" is a keyword"<<endl;
+				keywords.push_back(s);
 				s = "";
 			} else if (s == "(" || s == "{" || s == "[" || s == ")" || 
             s == "}" || s == "]" || s == "<" || s == ">" ||
             s == "()" || s == ";" || s == "<<" || s == ">>" ||
             s == "," || s == "#"){
 				cout << s <<" is a symbol"<<endl;
+				symbols.push_back(s);
 				s = "";
 			} else if (s == "\n" || s == "" || s == "") {
 				s = "";
@@ -63,12 +82,20 @@ int main (){
 					}
 					else {
 						cout << s <<" is a constant"<<endl;
+						constants.push_back(s);
 						s = "";
 					}		
 			} else {
 				cout << s <<" is an identifier"<<endl;
+				identifiers.push_back(s);
 				s = "";
 			}		
 		}	
 	}
+	//print the answers
+	print(operators, "Operators");
+	print(keywords, "Keywords");
+	print(constants, "Constants");
+	print(identifiers, "Identifiers");
+	print(symbols, "Symbols");
 }
