@@ -5,44 +5,41 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
-#include <list> 
 using namespace std;
 
-string arr[] = { "void", "using", "namespace", "int", 
-    "include", "iostream", "std", "main", 
-    "cin", "cout", "return", "float", 
-    "double", "string" 
-};
+string keys [100];
+
+void store_keyword(){
+    short loop=0; 
+    string line; 
+    ifstream myfile ("listOfKeywords.txt");
+    if (myfile.is_open()) 
+    {
+        while(getline(myfile,line)){
+            keys[loop] = line; 
+            loop++;
+        }
+        myfile.close(); 
+    }
+}
 
 bool isKeyword (string a)
 {
-	for (int i = 0; i < 14; i++) {
-		if (arr[i] == a) {
+	//gets the size of the key array
+	for (int i = 0; i < 14 ; i++) {
+		if (keys[i] == a) {
 			return true;
 		}
 	}
 	return false;
 }
 
-void print(list<string> const &list, string label)
-{
-	cout<<"-----------"<<label<<"-----------"<<endl;
-    for (auto const &i: list) {
-        cout << i << endl;
-    }
-}
-
 int main (){
-	//storage
-	list<string> operators = list<string>();
-	list<string> keywords = list<string>();
-	list<string> symbols = list<string>();
-	list<string> identifiers = list<string>();
-	list<string> constants = list<string>();
-	
     ifstream file("prog.txt");
     string x;
     string code = "";
+
+	store_keyword();
 
     while(getline(file,x)){
         code+=x;
@@ -59,19 +56,16 @@ int main (){
             s == "==" || s == "&" || s == "|" || s == "%" || 
             s == "++" || s == "--" || s == "+=" || s == "-=" || 
             s == "/=" || s == "*=" || s == "%=") {
-                // cout << s <<" is an operator"<<endl;
-				operators.push_back(s);
+                cout << s <<" is an operator"<<endl;
                 s = "";
             } else if (isKeyword (s)){
-				// cout << s <<" is a keyword"<<endl;
-				keywords.push_back(s);
+				cout << s <<" is a keyword"<<endl;
 				s = "";
 			} else if (s == "(" || s == "{" || s == "[" || s == ")" || 
             s == "}" || s == "]" || s == "<" || s == ">" ||
             s == "()" || s == ";" || s == "<<" || s == ">>" ||
             s == "," || s == "#"){
-				// cout << s <<" is a symbol"<<endl;
-				symbols.push_back(s);
+				cout << s <<" is a symbol"<<endl;
 				s = "";
 			} else if (s == "\n" || s == "" || s == "") {
 				s = "";
@@ -81,21 +75,13 @@ int main (){
 						continue;
 					}
 					else {
-						// cout << s <<" is a constant"<<endl;
-						constants.push_back(s);
+						cout << s <<" is a constant"<<endl;
 						s = "";
 					}		
 			} else {
-				// cout << s <<" is an identifier"<<endl;
-				identifiers.push_back(s);
+				cout << s <<" is an identifier"<<endl;
 				s = "";
 			}		
 		}	
 	}
-	//print the answers
-	print(operators, "Operators");
-	print(keywords, "Keywords");
-	print(constants, "Constants");
-	print(identifiers, "Identifiers");
-	print(symbols, "Symbols");
 }
