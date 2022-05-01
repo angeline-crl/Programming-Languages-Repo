@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <list> 
+#include <bits/stdc++.h>
 using namespace std;
 
 bool isKeyword (string a);
@@ -35,69 +36,67 @@ int main (){
 	//per line reading
     while(getline(file,x)){
         code+=x;
+		code+=" ";
     }
 	
 	string s = "";
+	int i = 0;
 	//reading per character
-	for(int i = 0; i<code.size(); i++){
-		if(code[i] != ' '){
-            s += code[i];
-        }
+	while (i < code.size()){
+		s += code[i];
+		//Operators
+		if (isOperator(s)) {
+			cout << s <<" is an operator"<<endl;
+			operators.push_back(s);
+			s = "";
+		} 
+
+		//Keyword
+		else if (isKeyword (s)){
+			cout << s <<" is a keyword"<<endl;
+			keywords.push_back(s);
+		} 
+
+		//Symbols
+		else if (isSymbols(s)){
+			cout << s <<" is a symbol"<<endl;
+			symbols.push_back(s);
+			s = "";
+		} 
+		
+		//Spaces
+		else if (s == "\n" || s == "" || s == " ") {
+			s = "";
+		} 
+		
+		//Numbers
+		else if (isdigit (s[0])) {
+			int x = 0;
+				if (!isdigit (s[x++])) {
+					continue;
+				}
+				else {
+					cout << s <<" is a constant"<<endl;
+					constants.push_back(s);
+					s = "";
+				}		
+		} 
+		
+		//Identifier
 		else {
-			//Operators
-			if (isOperator(s)) {
-                // cout << s <<" is an operator"<<endl;
-				operators.push_back(s);
-                s = "";
-            } 
-
-			//Keyword --- done na
-			else if (isKeyword (s)){
-				// cout << s <<" is a keyword"<<endl;
-				keywords.push_back(s);
-				s = "";
-			} 
-
-			//Symbols
-			else if (isSymbols(s)){
-				// cout << s <<" is a symbol"<<endl;
-				symbols.push_back(s);
-				s = "";
-			} 
-			
-			//Spaces
-			else if (s == "\n" || s == "" || s == "") {
-				s = "";
-			} 
-			
-			//Numbers
-			else if (isdigit (s[0])) {
-				int x = 0;
-					if (!isdigit (s[x++])) {
-						continue;
-					}
-					else {
-						// cout << s <<" is a constant"<<endl;
-						constants.push_back(s);
-						s = "";
-					}		
-			} 
-			
-			//Identifier
-			else {
-				// cout << s <<" is an identifier"<<endl;
-				identifiers.push_back(s);
-				s = "";
-			}		
-		}	
+			cout << s <<" is an identifier"<<endl;
+			identifiers.push_back(s);
+			s = "";
+		}
+		i++;			
 	}
 
 	//print the answers
-	print(operators, "Operators");
-	print(keywords, "Keywords");
-	print(constants, "Constants");
-	print(identifiers, "Identifiers");
-	print(symbols, "Symbols");
+	// print(operators, "Operators");
+	// print(keywords, "Keywords");
+	// print(constants, "Constants");
+	// print(identifiers, "Identifiers");
+	// print(symbols, "Symbols");
 }
 
 bool isKeyword (string a)
