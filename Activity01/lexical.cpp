@@ -12,6 +12,7 @@ using namespace std;
 bool isKeyword (string a);
 bool isOperator (string a);
 bool isSymbols (string a);
+bool checking (string s);
 void print(list<string> const &list, string label);
 
 int main (){
@@ -21,6 +22,7 @@ int main (){
 	list<string> symbols = list<string>();
 	list<string> identifiers = list<string>();
 	list<string> constants = list<string>();
+	string combi = "";
 	
 	//getting the words from the text files
     ifstream file("prog.txt");
@@ -55,6 +57,7 @@ int main (){
 		else if (isKeyword (s)){
 			cout << s <<" is a keyword"<<endl;
 			keywords.push_back(s);
+			s = "";
 		} 
 
 		//Symbols
@@ -72,21 +75,24 @@ int main (){
 		//Numbers
 		else if (isdigit (s[0])) {
 			int x = 0;
-				if (!isdigit (s[x++])) {
-					continue;
-				}
-				else {
-					cout << s <<" is a constant"<<endl;
-					constants.push_back(s);
-					s = "";
-				}		
+			if (!isdigit (s[x++])) {
+				continue;
+			}
+			else {
+				cout << s <<" is a constant"<<endl;
+				constants.push_back(s);
+				s = "";
+			}		
 		} 
 		
 		//Identifier
-		else {
-			cout << s <<" is an identifier"<<endl;
-			identifiers.push_back(s);
-			s = "";
+		else { 
+			combi += s;
+
+			if (checking(combi)){
+				combi = "";
+			}
+			s="";
 		}
 		i++;			
 	}
@@ -111,7 +117,7 @@ bool isKeyword (string a)
 		"using", "namespace","include", "std",
 		"iostream","main", "cin","cout", "return",
 		"auto", "goto", "for", "const",
-		"char", "signed", "register"
+		"char", "signed", "register", "main"
 	};
 
 
@@ -153,6 +159,16 @@ bool isSymbols (string a)
 		if(a == symbol[i])
 			return true;
 	}
+	return false;
+}
+
+bool checking (string s){
+	//Keyword
+	if (isKeyword (s)){
+		cout << s <<" is a keyword"<<endl;
+		s = "";
+		return true;
+	} 
 	return false;
 }
 
